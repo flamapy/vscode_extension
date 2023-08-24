@@ -23,6 +23,21 @@
         "name": "UVL"
       }
     ],
+    "viewContainers": [{
+      "id": "yourExtensionActivity",
+      "title": "Your Extension Name",
+      "icon": "path-to-your-icon.svg",
+      "location": "activitybar"
+
+  }],
+  "views": {
+      "yourExtensionActivity": [{
+          "id": "yourExtensionView",
+          "name": "Your Extension View Name",
+          "when": "resourceExtname == .uvl"
+
+      }]
+  },
     "commands": [
       {
         "command": "flamapy.valid",
