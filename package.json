@@ -1,0 +1,95 @@
+{
+  "name": "flamapy",
+  "displayName": "Flama",
+  "description": "This is a feature model analysis tool",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.81.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onLanguage:uvl"
+  ],
+  "main": "./extension.js",
+  "contributes": {
+    "languages": [
+      {
+        "id": "uvl",
+        "extensions": [
+          ".uvl"
+        ],
+        "name": "UVL"
+      }
+    ],
+    "commands": [
+      {
+        "command": "flamapy.valid",
+        "title": "Valid"
+      }
+      ,
+      {
+        "command": "flamapy.products",
+        "title": "Products"
+      }
+      ,
+      {
+        "command": "flamapy.dead_features",
+        "title": "Dead features"
+      }
+      ,
+      {
+        "command": "flamapy.false_optional_features",
+        "title": "False optional"
+      }
+    ],
+    "menus": {
+      "editor/title": [
+          {
+              "command": "flamapy.valid",
+              "group": "navigation",
+              "when": "resourceFilename =~ /\\.uvl$/"
+          }
+          ,
+          {
+            "command": "flamapy.products",
+            "group": "navigation",
+            "when": "resourceFilename =~ /\\.uvl$/"
+          }
+          ,
+          {
+            "command": "flamapy.dead_features",
+            "group": "navigation",
+            "when": "resourceFilename =~ /\\.uvl$/"
+          }
+          ,
+          {
+            "command": "flamapy.false_optional_features",
+            "group": "navigation",
+            "when": "resourceFilename =~ /\\.uvl$/"
+          }
+      ]
+  }
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "pretest": "npm run lint",
+    "test": "node ./test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/glob": "^8.1.0",
+    "@types/mocha": "^10.0.1",
+    "@types/node": "20.2.5",
+    "@types/vscode": "^1.81.0",
+    "@vscode/test-electron": "^2.3.2",
+    "eslint": "^8.41.0",
+    "glob": "^8.1.0",
+    "mocha": "^10.2.0",
+    "typescript": "^5.1.3"
+  },
+  "dependencies": {
+    "node-fetch": "^3.3.2",
+    "pyodide": "^0.23.4"
+  }
+}
