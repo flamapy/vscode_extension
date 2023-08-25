@@ -3,6 +3,7 @@
   "displayName": "Flama",
   "description": "This is a feature model analysis tool",
   "icon": "./files/main_logo",
+  "repository": "https://github.com/flamapy/vscode_extension",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.81.0"
