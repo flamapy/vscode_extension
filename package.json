@@ -2,6 +2,7 @@
   "name": "flamapy",
   "displayName": "Flama",
   "description": "This is a feature model analysis tool",
+  "icon": "./files/main_logo",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.81.0"
@@ -23,69 +24,77 @@
         "name": "UVL"
       }
     ],
-    "viewContainers": [{
-      "id": "yourExtensionActivity",
-      "title": "Your Extension Name",
-      "icon": "path-to-your-icon.svg",
-      "location": "activitybar"
-
-  }],
-  "views": {
-      "yourExtensionActivity": [{
-          "id": "yourExtensionView",
-          "name": "Your Extension View Name",
+    "viewsContainers": {
+      "activitybar":[
+      {
+        "id": "flamaActivity",
+        "title": "Flama for VSCode",
+        "icon": "./files/logo_sqr.svg"
+      }
+    ]},
+    "views": {
+      "flamaActivity": [
+        {
+          "id": "flamaView",
+          "name": "Flama Operations",
           "when": "resourceExtname == .uvl"
-
-      }]
-  },
+        }
+      ]
+    },
     "commands": [
       {
-        "command": "flamapy.valid",
-        "title": "Valid"
-      }
-      ,
+        "command": "Products",
+        "title": "flamapy.products"
+      },
       {
-        "command": "flamapy.products",
-        "title": "Products"
-      }
-      ,
+        "command": "Valid",
+        "title": "flamapy.valid"
+      },
       {
-        "command": "flamapy.dead_features",
-        "title": "Dead features"
-      }
-      ,
+        "command": "Atomic Sets",
+        "title": "flamapy.atomic_sets"
+      },
       {
-        "command": "flamapy.false_optional_features",
-        "title": "False optional"
+        "command": "Avg Branching Factor",
+        "title": "flamapy.average_branching_factor"
+      },
+      {
+        "command": "Count Leafs",
+        "title": "flamapy.count_leafs"
+      },
+      {
+        "command": "Estimated #Configurations",
+        "title": "flamapy.estimated_number_of_products"
+      },
+      {
+        "command": "Leaf feature lists",
+        "title": "flamapy.leaf_features"
+      },
+      {
+        "command": "Max Depth",
+        "title": "flamapy.max_depth"
+      },
+      {
+        "command": "Core Features",
+        "title": "flamapy.core_features"
+      },
+      {
+        "command": "Dead Features",
+        "title": "flamapy.dead_features"
+      },
+      {
+        "command": "Error detection",
+        "title": "flamapy.error_detection"
+      },
+      {
+        "command": "False Optional Features",
+        "title": "flamapy.false_optional_features"
+      },
+      {
+        "command": "#Configurations",
+        "title": "flamapy.products_number"
       }
-    ],
-    "menus": {
-      "editor/title": [
-          {
-              "command": "flamapy.valid",
-              "group": "navigation",
-              "when": "resourceFilename =~ /\\.uvl$/"
-          }
-          ,
-          {
-            "command": "flamapy.products",
-            "group": "navigation",
-            "when": "resourceFilename =~ /\\.uvl$/"
-          }
-          ,
-          {
-            "command": "flamapy.dead_features",
-            "group": "navigation",
-            "when": "resourceFilename =~ /\\.uvl$/"
-          }
-          ,
-          {
-            "command": "flamapy.false_optional_features",
-            "group": "navigation",
-            "when": "resourceFilename =~ /\\.uvl$/"
-          }
-      ]
-  }
+    ]
   },
   "scripts": {
     "lint": "eslint .",

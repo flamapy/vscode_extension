@@ -1,65 +1,35 @@
-# flamapy README
+## Flama - A variability analysis tool written in Python.
 
-This is the README for your extension "flamapy". After writing up a brief description, we recommend including the following sections.
+Welcome to the flamapy VS extesion.
 
-## Features
+FlamaPy is a Python-based AAFM framework that takes into consideration previous AAFM tool designs and enables multi-solver and multi-metamodel support for the integration of AAFM tooling on the Python ecosystem. In this case, we are relying on pyodide to eecute part of the already supported operations within vscode and uvl files
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+The main features of the framework are:
+* Easy to extend by enabling the creation of new plugins following a semi-automatic generator approach.
+* Support multiple variability models. Currently, it provides support for cardinality-based feature models. However, it is easy to integrate others such as attributed feature models
+* Support multiple solvers. Currently, it provides support for the PySAT metasolver, which enables more than ten different solvers.
+* Support multiple operations. It is developed, having in mind multi-model operations such as those depicted by Familiar  and single-model operations.
 
-For example if there is an image subfolder under your extension project workspace:
+Go to our website for more information [website](https://flamapy.github.io)
+In this wiki you'll find the documentation of this project. 
 
-\!\[feature X\]\(images/feature-x.png\)
+- [1. Installation](https://flamapy.github.io/docs/jekyll/2022-06-12-1-installation.html)
+- [2. Usage](https://flamapy.github.io/docs/jekyll/2022-06-12-2-usage.html)
+- [3. Development](https://flamapy.github.io/docs/jekyll/2022-06-12-3-development.html)
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+## Google colab First steps
 
-## Requirements
+- [Google colab project](https://colab.research.google.com/drive/1ktuEn2KAqv7dbzeHQc-G_kUxUEW-n_av?usp=sharing)
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
 
-## Extension Settings
+## Available plugins and related projects
+[flamapy-fm](https://github.com/flamapy/fm_metamodel)
+[flamapy-sat](https://github.com/flamapy/pysat_metamodel)
+[flamapy-bdd](https://github.com/flamapy/bdd_metamodel)
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+## Changelog
+Detailed changes for each release are documented in the [release notes](https://github.com/flamapy/core/releases)
 
-For example:
+## Contributing
 
-This extension contributes the following settings:
-
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
-
-## Known Issues
-
-Calling out known issues can help limit users opening duplicate issues against your extension.
-
-## Release Notes
-
-Users appreciate release notes as you update your extension.
-
-### 1.0.0
-
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
----
-
-## Working with Markdown
-
-You can author your README using Visual Studio Code.  Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux)
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux)
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets
-
-## For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+See [CONTRIBUTING.md](https://github.com/flamapy/core/blob/master/CONTRIBUTING.md)

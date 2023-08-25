@@ -31,6 +31,8 @@ async function getPyodideInstance() {
 
 async function ensurePackagesLoaded(pyodide) {
     if (!packagesLoaded) {
+        statusBarItem.show();
+
         await pyodide.loadPackage(['micropip']);
         const micropip = pyodide.pyimport("micropip");
 
@@ -50,6 +52,7 @@ async function ensurePackagesLoaded(pyodide) {
         await micropip.install("flamapy-fm-dist", deps=False)#this is to avoid problems with deps later on
         `)
         packagesLoaded = true;
+        statusBarItem.hide();
     }
 }
 
@@ -69,11 +72,18 @@ async function exec_python(code) {
     const pyodide = await getPyodideInstance();
     
     // Ensure packages are loaded
+    if(packagesLoaded==false){
+        vscode.window.showWarningMessage('Pyodide and Flama are not yet loaded. Please wait!');
+        return null
+    }
     await ensurePackagesLoaded(pyodide);
 
     // Example usage:
     let uvl_file = getActiveFileContent();
-
+    if ( uvl_file== null){
+        vscode.window.showWarningMessage('No active UVL file. Cannot execute the operation!');
+        return null
+    }
     pyodide.FS.writeFile("uvlfile.uvl", uvl_file, { encoding: "utf8" });
    
     return pyodide.runPythonAsync(
@@ -127,22 +137,40 @@ function createCommand(id,code,result_header){
         statusBarItem.show();
         
         exec_python(code).then((result) => {
-            const panel = vscode.window.createWebviewPanel(
-                'resultDisplay', 
-                result_header, 
-                vscode.ViewColumn.Two, 
-                {}
-            );
-            panel.webview.html = `<html><body>`+result+`</body></html>`;
-            statusBarItem.hide()
+            if (result != null) {
+                const panel = vscode.window.createWebviewPanel(
+                    'resultDisplay', 
+                    result_header, 
+                    vscode.ViewColumn.Two, 
+                    {}
+                );
+                panel.webview.html = `<html><body>`+result+`</body></html>`;
+        }
+        statusBarItem.hide()
         });
+    
     });
     return command
 }
 function activate(context) {
     const provider = new ButtonProvider();
-    vscode.window.registerTreeDataProvider('yourExtensionView', provider);
-  
+    vscode.window.registerTreeDataProvider('flamaView', provider);
+    vscode.commands.executeCommand('setContext', 'flamaPackagesLoaded', false);
+
+    //This is to start loading pyodide asap
+    (async () => {
+        try {
+            vscode.window.showInformationMessage('Loading Pyodide and Flama packages');
+
+            const pyodide = await getPyodideInstance();
+            ensurePackagesLoaded(pyodide).then(() => {
+                vscode.window.showInformationMessage('Done Loading Pyodide and Flama packages');
+            })
+        } catch (error) {
+            console.error("Error initializing Pyodide and Flama:", error);
+        }
+    })();
+
     let flamapy_products = createCommand(
         'flamapy.products',
         `
@@ -206,7 +234,7 @@ function activate(context) {
         result=fm.count_leafs()
         "<br>"+str(result)
         `,
-        'Avg Branching Factor Result')
+        'Count leafs Result')
 
     let flamapy_estimated_number_of_products = createCommand(
         'flamapy.estimated_number_of_products',
@@ -245,6 +273,7 @@ function activate(context) {
         "<br>"+str(result)
         `,
         '#Configurations Result')  
+
 
     context.subscriptions.push(flamapy_products)
     context.subscriptions.push(flamapy_valid)
