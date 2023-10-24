@@ -5,18 +5,12 @@
  */
 
 const vscode = require('vscode');
-const fs = require('fs');
 const path = require('path');
 
 const { loadPyodide } = require("pyodide");
 
 // Use a dynamic import for node-fetch
-let fetchInstance;
 
-import('node-fetch').then(fetchModule => {
-    fetchInstance = fetchModule.default;
-    globalThis.fetch = fetchInstance;
-});
 
 let globalPyodideInstance = null;
 let packagesLoaded = false;
