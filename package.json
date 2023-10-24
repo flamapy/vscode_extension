@@ -4,7 +4,7 @@
   "description": "This is a feature model analysis tool",
   "icon": "files/main_logo.png",
   "repository": "https://github.com/flamapy/vscode_extension",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "publisher": "diversolab",
   "engines": {
     "vscode": "^1.81.0"
@@ -116,7 +116,7 @@
   },
   "dependencies": {
     "node-fetch": "^3.3.2",
-    "pyodide": "^0.23.4"
+    "pyodide": "^0.24.1"
   },
   "files": [
     "files/*"
