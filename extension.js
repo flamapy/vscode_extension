@@ -39,9 +39,12 @@ async function ensurePackagesLoaded(pyodide,context) {
         
         await pyodide.loadPackage(['micropip']);
         const micropip = pyodide.pyimport("micropip");
+        await micropip.install("file:///"+context.asAbsolutePath(path.join('files','wheels', "six-1.16.0-py2.py3-none-any.whl")));
+        await micropip.install("file:///"+context.asAbsolutePath(path.join('files','wheels', "certifi-2023.7.22-py3-none-any.whl")));
+        await micropip.install("file:///"+context.asAbsolutePath(path.join('files','wheels', "idna-3.4-py3-none-any.whl")));
 
         await micropip.install("file:///"+context.asAbsolutePath(path.join('files','wheels', "antlr4_python3_runtime-4.7.2-py3-none-any.whl")));        
-        await micropip.install("file:///"+context.asAbsolutePath(path.join('files','wheels',"antlr_denter-1.3.1-py3-none-any.whl")));
+        await micropip.install("file:///"+context.asAbsolutePath(path.join('files','wheels', "antlr_denter-1.3.1-py3-none-any.whl")));
         await micropip.install("file:///"+context.asAbsolutePath(path.join('files','wheels', "afmparser-1.0.0-py3-none-any.whl")));
         await micropip.install("file:///"+context.asAbsolutePath(path.join('files','wheels', "uvlparser-1.0.2-py3-none-any.whl")));
 
