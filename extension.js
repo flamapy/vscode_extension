@@ -39,18 +39,19 @@ async function ensurePackagesLoaded(pyodide) {
 
         //Now we install our custom wheels for antlr4 so its wasm compatible
         await micropip.install("https://github.com/flamapy/tutorial/raw/wasm-UVL/files/antlr4_python3_runtime-4.7.2-py3-none-any.whl");
-        
-        //Let's install Flama starting with the UVLparser
-        await micropip.install("uvlparser");
-        await micropip.install("flamapy-fm");
+        await micropip.install("uvlparser==1.0.2");
+		await micropip.install("afmparser==1.0.0");
+		await pyodide.runPythonAsync(`
+        import micropip
+        await micropip.install("flamapy-fm-dist", deps=False)#this is to avoid problems with deps later on
+        await micropip.install("flamapy==1.1.3", deps=False);
+        await micropip.install("flamapy-fm==1.1.3", deps=False);
         await micropip.install("flamapy-sat");
+        `)
+        //Let's install Flama starting with the UVLparser
         
         //This function installs the flamapy-fm distribution but without its dependencies as fire wont work on wasm
         //Note that the code of python has a different identation to avoid problems with tabs.
-        await pyodide.runPythonAsync(`
-        import micropip
-        await micropip.install("flamapy-fm-dist", deps=False)#this is to avoid problems with deps later on
-        `)
         packagesLoaded = true;
         statusBarItem.hide();
     }
