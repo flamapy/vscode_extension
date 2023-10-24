@@ -9,9 +9,6 @@ const path = require('path');
 
 const { loadPyodide } = require("pyodide");
 
-// Use a dynamic import for node-fetch
-
-
 let globalPyodideInstance = null;
 let packagesLoaded = false;
 
