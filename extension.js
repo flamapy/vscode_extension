@@ -6,7 +6,6 @@
 
 const vscode = require('vscode');
 const path = require('path');
-
 const { loadPyodide } = require("pyodide");
 
 let globalPyodideInstance = null;
@@ -16,9 +15,15 @@ let statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.
         statusBarItem.text = "$(sync~spin) Processing...";
 
 
-async function getPyodideInstance() {
+async function getPyodideInstance(context) {
+    let pyodidePath="file:///"+context.asAbsolutePath(path.join('files','pyodide'));
+    console.log(pyodidePath);
     if (!globalPyodideInstance) {
-        globalPyodideInstance = await loadPyodide();
+        globalPyodideInstance = await loadPyodide(
+            {
+                indexURL: pyodidePath,
+            }
+        );
     }
     return globalPyodideInstance;
 }
@@ -26,8 +31,7 @@ async function getPyodideInstance() {
 async function ensurePackagesLoaded(pyodide,context) {
     if (!packagesLoaded) {
         statusBarItem.show();
-
-        
+        // Load micropip
         await pyodide.loadPackage(['micropip']);
         const micropip = pyodide.pyimport("micropip");
         await micropip.install("file:///"+context.asAbsolutePath(path.join('files','wheels', "six-1.16.0-py2.py3-none-any.whl")));
@@ -164,7 +168,7 @@ function activate(context) {
         try {
             vscode.window.showInformationMessage('Loading Pyodide and Flama packages');
 
-            const pyodide = await getPyodideInstance();
+            const pyodide = await getPyodideInstance(context);
             ensurePackagesLoaded(pyodide,context).then(() => {
                 vscode.window.showInformationMessage('Done Loading Pyodide and Flama packages');
             })

@@ -27,13 +27,14 @@
       }
     ],
     "viewsContainers": {
-      "activitybar":[
-      {
-        "id": "flamaActivity",
-        "title": "Flama for VSCode",
-        "icon": "./files/logo_sqr.svg"
-      }
-    ]},
+      "activitybar": [
+        {
+          "id": "flamaActivity",
+          "title": "Flama for VSCode",
+          "icon": "./files/logo_sqr.svg"
+        }
+      ]
+    },
     "views": {
       "flamaActivity": [
         {
@@ -121,5 +122,4 @@
   "files": [
     "files/*"
   ]
-  
 }
