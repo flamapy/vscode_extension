@@ -5,6 +5,9 @@
  */
 
 const vscode = require('vscode');
+const fs = require('fs');
+const path = require('path');
+
 const { loadPyodide } = require("pyodide");
 
 // Use a dynamic import for node-fetch
@@ -29,25 +32,29 @@ async function getPyodideInstance() {
     return globalPyodideInstance;
 }
 
-async function ensurePackagesLoaded(pyodide) {
+async function ensurePackagesLoaded(pyodide,context) {
     if (!packagesLoaded) {
         statusBarItem.show();
 
+        
         await pyodide.loadPackage(['micropip']);
         const micropip = pyodide.pyimport("micropip");
 
+        await micropip.install("file:///"+context.asAbsolutePath(path.join('files','wheels', "antlr4_python3_runtime-4.7.2-py3-none-any.whl")));        
+        await micropip.install("file:///"+context.asAbsolutePath(path.join('files','wheels',"antlr_denter-1.3.1-py3-none-any.whl")));
+        await micropip.install("file:///"+context.asAbsolutePath(path.join('files','wheels', "afmparser-1.0.0-py3-none-any.whl")));
+        await micropip.install("file:///"+context.asAbsolutePath(path.join('files','wheels', "uvlparser-1.0.2-py3-none-any.whl")));
 
-        //Now we install our custom wheels for antlr4 so its wasm compatible
-        await micropip.install("https://github.com/flamapy/tutorial/raw/wasm-UVL/files/antlr4_python3_runtime-4.7.2-py3-none-any.whl");
-        await micropip.install("uvlparser==1.0.2");
-		await micropip.install("afmparser==1.0.0");
-		await pyodide.runPythonAsync(`
+        await micropip.install("file:///"+context.asAbsolutePath(path.join('files','wheels', "flamapy-1.1.3-py3-none-any.whl")));
+        await micropip.install("file:///"+context.asAbsolutePath(path.join('files','wheels', "flamapy_fm-1.1.3-py3-none-any.whl")));
+        await micropip.install("file:///"+context.asAbsolutePath(path.join('files','wheels', "flamapy_sat-1.1.7-py3-none-any.whl")));
+        let flamapy_fm_dist="file:///"+context.asAbsolutePath(path.join('files','wheels', "flamapy_fm_dist-1.6.0-py3-none-any.whl"));
+
+        await pyodide.runPythonAsync(`
         import micropip
-        await micropip.install("flamapy-fm-dist", deps=False)#this is to avoid problems with deps later on
-        await micropip.install("flamapy==1.1.3", deps=False);
-        await micropip.install("flamapy-fm==1.1.3", deps=False);
-        await micropip.install("flamapy-sat");
-        `)
+        await micropip.install("`+flamapy_fm_dist+`", deps=False)#this is to avoid problems with deps later on
+        `);
+
         //Let's install Flama starting with the UVLparser
         
         //This function installs the flamapy-fm distribution but without its dependencies as fire wont work on wasm
@@ -164,7 +171,7 @@ function activate(context) {
             vscode.window.showInformationMessage('Loading Pyodide and Flama packages');
 
             const pyodide = await getPyodideInstance();
-            ensurePackagesLoaded(pyodide).then(() => {
+            ensurePackagesLoaded(pyodide,context).then(() => {
                 vscode.window.showInformationMessage('Done Loading Pyodide and Flama packages');
             })
         } catch (error) {
